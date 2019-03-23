@@ -1,10 +1,9 @@
 package SearchEngine;
 
- import java.io.IOException;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
- 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -21,19 +20,21 @@ public class TextSearchEngine
    //creates documents to store in the indexWriter of the search engine
     public static void main(String[] args) throws Exception
     {
+		if (args.length != 1) {
+			DirectoryInputError();
+			return;
+		}
+		//to be used for passing in the image content items
+		String directoryToFiles = args[0];
+		TextParser.ContentParser(directoryToFiles);
+		
         IndexWriter writer = createWriter();
         List<Document> documents = new ArrayList<>();
          
         //used to drop the meme content into the search after parsing
         Document document1 = createDocument(1, "This is a test-meme", "google.com");
         documents.add(document1);
-         
-        Document document2 = createDocument(2, "Lorem ipsum dolor sit amet", "google.com");
-        documents.add(document2);
-        
-        //clear the writer of all documents just for a test
-        writer.deleteAll();
-         
+
         //add them back
         writer.addDocuments(documents);
         writer.commit();
@@ -58,4 +59,10 @@ public class TextSearchEngine
         IndexWriter writer = new IndexWriter(dir, config);
         return writer;
     }
+    
+	private static void DirectoryInputError() {
+		System.out.println("******* ERROR: INCORRECT ARGUMENT INPUT *******");
+		System.out.println("[Input Format]:");
+		System.out.println("1. Complete path of file directory");
+	}
 }
