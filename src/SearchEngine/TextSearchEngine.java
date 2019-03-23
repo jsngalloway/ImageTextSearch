@@ -33,7 +33,7 @@ public class TextSearchEngine
          
         //used to drop the meme content into the search after parsing
         for (int i = 0; i < searchItems.length - 1; i++) {
-            Document document1 = createDocument(1, searchItems[i], "google.com");
+            Document document1 = createDocument(i, searchItems[0][i], searchItems[1][i]);
             documents.add(document1);
         }
 
