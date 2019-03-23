@@ -26,14 +26,16 @@ public class TextSearchEngine
 		}
 		//to be used for passing in the image content items
 		String directoryToFiles = args[0];
-		TextParser.ContentParser(directoryToFiles);
+		String[] searchItems = TextParser.ContentParser(directoryToFiles);
 		
         IndexWriter writer = createWriter();
         List<Document> documents = new ArrayList<>();
          
         //used to drop the meme content into the search after parsing
-        Document document1 = createDocument(1, "This is a test-meme", "google.com");
-        documents.add(document1);
+        for (int i = 0; i < searchItems.length - 1; i++) {
+            Document document1 = createDocument(1, searchItems[i], "google.com");
+            documents.add(document1);
+        }
 
         //add them back
         writer.addDocuments(documents);
@@ -42,11 +44,11 @@ public class TextSearchEngine
     }
 
     //format of the document creation
-    private static Document createDocument(Integer id, String textContent, String siteLink)
+    private static Document createDocument(Integer id, String searchItems, String siteLink)
     {
         Document document = new Document();
         document.add(new StringField("id", id.toString() , Field.Store.YES));
-        document.add(new TextField("content", textContent , Field.Store.YES));
+        document.add(new TextField("content", searchItems , Field.Store.YES));
         document.add(new TextField("site", siteLink , Field.Store.YES));
         return document;
     }
