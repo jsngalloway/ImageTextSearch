@@ -24,7 +24,7 @@ public class Searcher
         IndexSearcher memeSearcher = createSearcher();
          
         //Search by meme content
-        TopDocs foundMemes = searchByTextContent("placeholder", memeSearcher);
+        TopDocs foundMemes = searchByTextContent("hello", memeSearcher);
          
         System.out.println("Results: " + foundMemes.totalHits);
          
@@ -38,9 +38,9 @@ public class Searcher
     //launch query on text input
     private static TopDocs searchByTextContent(String searchItems, IndexSearcher searcher) throws Exception
     {
-        QueryParser qp = new QueryParser("Text Search", new StandardAnalyzer());
+        QueryParser qp = new QueryParser("content", new StandardAnalyzer());
         Query textContentQuery = qp.parse(searchItems);
-        TopDocs hits = searcher.search(textContentQuery, 10);
+        TopDocs hits = searcher.search(textContentQuery, 1000);
         return hits;
     }
     

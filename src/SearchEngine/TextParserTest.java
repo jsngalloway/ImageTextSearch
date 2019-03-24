@@ -1,3 +1,5 @@
+package SearchEngine;
+
 public class TextParserTest {
     
         public static void main(String[] args){

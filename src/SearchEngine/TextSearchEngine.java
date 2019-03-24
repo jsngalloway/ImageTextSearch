@@ -26,15 +26,23 @@ public class TextSearchEngine
 		}
 		//to be used for passing in the image content items
 		String directoryToFiles = args[0];
-		String[] searchItems = TextParser.ContentParser(directoryToFiles);
+		String[][] searchItems = TextParser.ContentParser(directoryToFiles);
 		
         IndexWriter writer = createWriter();
         List<Document> documents = new ArrayList<>();
          
         //used to drop the meme content into the search after parsing
         for (int i = 0; i < searchItems.length - 1; i++) {
-            Document document1 = createDocument(i, searchItems[0][i], searchItems[1][i]);
-            documents.add(document1);
+//            Document document1 = createDocument(i, searchItems[0][i], searchItems[1][i]);
+        	if (searchItems[i][0] == null && searchItems[i][1] == null) {
+        		i++;
+        	}
+        	else {
+                documents.add(createDocument(i, searchItems[i][0], searchItems[i][1]));
+                System.out.println(searchItems[i][0]);
+                System.out.println(searchItems[i][1]);
+        	}
+        	
         }
 
         //add them back
