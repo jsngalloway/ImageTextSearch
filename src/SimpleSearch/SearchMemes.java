@@ -1,9 +1,11 @@
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
@@ -53,13 +55,22 @@ public class SearchMemes {
         			results.add( new MemeResult(memes.get(j), percent) );
         		}
         	}
-        	System.out.println("Returned (" + results.size() + ") results.");
-        	if(results.size() > 5) {
-        		System.out.println("Top resuts:");
+        	if(!results.isEmpty()) {
+	        	System.out.println("Returned (" + results.size() + ") results.");
+	        	if(results.size() > 5) {
+	        		System.out.println("Top resuts:");
+	        	}
+	        	try {
+	        		  Desktop desktop = java.awt.Desktop.getDesktop();
+	        		  URI oURL = new URI(results.peek().getURL());
+	        		  desktop.browse(oURL);
+	        		} catch (Exception e) {
+	        		  e.printStackTrace();
+	        		}
+	            for(int k = 0; (k <= 5 && !results.isEmpty()); k++) {
+	                System.out.println(results.remove().toString());
+	            }
         	}
-            for(int k = 0; (k <= 5 && !results.isEmpty()); k++) {
-                System.out.println(results.remove().toString());
-            }
             System.out.println("");
         }
     }

@@ -17,6 +17,10 @@ public class MemeResult implements Comparable<MemeResult> {
 		return meme.toString();
 	}
 	
+	public String getURL() {
+		return meme.getURL();
+	}
+	
 	@Override
 	public int compareTo(MemeResult other) {
 	    return Integer.compare(this.getPercentInt(), other.getPercentInt());
